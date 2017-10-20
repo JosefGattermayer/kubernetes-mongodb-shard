@@ -83,13 +83,13 @@ function getRole(){
 	echo $1 | cut -b 1
 }
 function getPortShift(){
-	IDX1=$((2 * $1 - 2))
+	IDX1=$((2 * ${1##*0} - 2))
 	echo "${RSSADD:${IDX1}:2}"
 }
 function addPortShift(){
 	VAL=$(getPortShift $1)
 	VAL=$(printf %02d $(($VAL + 1)))
-	AXIS1=$(( 2 * $1 - 2))
+	AXIS1=$(( 2 * ${1##*0} - 2))
 	AXIS2=$((${#RSSADD} - $AXIS1 ))
 	AFTER=$(rotateAxis $RSSADD $AXIS1 | cut -b 3-)
 	RSSADD=$(rotateAxis "${VAL}${AFTER}" ${AXIS2})
@@ -202,7 +202,7 @@ function genYamlFromTemplates(){
 			| sed "s|__VERSION__|${VERSION}|g" \
 			| sed "/##/d" \
 			> $OUTFILE
-		ID=$((${NODENUM}-1))
+		ID=$((${NODENUM##*0}-1))
 		CONFIG_SERVERS_SERVICES="${CONFIG_SERVERS_SERVICES},mongodb-node${NODENUM}.default.svc.cluster.local:${PORT}"
 		CONFIG_SERVERS_SERVICES_JS="${CONFIG_SERVERS_SERVICES_JS},\n\t\t{ _id: ${ID}, host: \"mongodb-node${NODENUM}.default.svc.cluster.local:${PORT}\" }"
 	fi
