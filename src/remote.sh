@@ -8,7 +8,7 @@ BASEDIR=$4 && [ -z "${4}" ] && BASEDIR="/data" || true
 
 function sshCall(){
 	#ssh -p $SSHPORT $SSHUSER@$1 $2 </dev/null
-	gcloud compute ssh @$1 $2 </dev/null
+	gcloud compute ssh $1 -- $2 </dev/null
 }
 function execRemote(){
 	FILE=${1}
