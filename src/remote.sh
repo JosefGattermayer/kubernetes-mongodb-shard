@@ -7,7 +7,8 @@ SSHPORT=$3 && [ -z "${3}" ] && SSHPORT="22" || true
 BASEDIR=$4 && [ -z "${4}" ] && BASEDIR="/data" || true
 
 function sshCall(){
-	ssh -p $SSHPORT $SSHUSER@$1 $2 </dev/null
+	#ssh -p $SSHPORT $SSHUSER@$1 $2 </dev/null
+	gcloud compute ssh @$1 $2 </dev/null
 }
 function execRemote(){
 	FILE=${1}
